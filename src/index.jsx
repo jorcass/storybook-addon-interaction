@@ -27,8 +27,12 @@ export const getProps = () => {
     .reduce((acc, next) => {
       acc[next[0]] = (...args) => {
         const result = next[1](Store.data)(...args);
-        Store.updateData(result);
-        Store.addLog(next[0], args, result);
+        const stateResult = (typeof result === 'object' && !Array.isArray(result))
+          ? result
+          : undefined;
+        // stateResult is either the changed state or undefined
+        if (stateResult) { Store.updateData(stateResult); }
+        Store.addLog(next[0], args, stateResult);
       };
       return acc;
     }, {});
