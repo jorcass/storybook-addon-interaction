@@ -1,6 +1,14 @@
 import addons, { makeDecorator } from '@storybook/addons';
 import Store from './Store';
 
+const genericAction = () => () => {};
+const fillGenericActions = (actions = {}) => {
+  if (!Array.isArray(actions)) { return actions; }
+  const newActions = {};
+  actions.forEach((v) => { newActions[v] = genericAction; })
+  return newActions;
+};
+
 export default makeDecorator({
   name: 'withInteraction',
   parameterName: 'interaction',
@@ -14,8 +22,8 @@ export default makeDecorator({
       ...(Store.data || {}),
     });
     Store.setActions({
-      ...(options.actions || {}),
-      ...(parameters.actions || {}),
+      ...fillGenericActions(options.actions),
+      ...fillGenericActions(parameters.actions),
     });
 
     return getStory(context);
