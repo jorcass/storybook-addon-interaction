@@ -28,12 +28,16 @@
     "eslint-plugin-react": "^7.12.3"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.6",
+    "@emotion/styled": "^10.0.6",
     "@storybook/addons": "^4.1.6",
     "@storybook/core-events": "^4.1.6",
     "clone": "^2.1.2",
     "debounce": "^1.2.0",
     "proptypes": "^1.1.0",
     "react": "^16.7.0",
+    "react-inspector": "^2.3.1",
+    "react-transition-group": "^2.5.3",
     "shallowequal": "^1.1.0"
   }
 }
