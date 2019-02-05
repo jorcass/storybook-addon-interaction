@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-interaction",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -16,8 +16,8 @@
   "license": "MIT",
   "homepage": "https://github.com/jorcass/storybook-addon-interaction",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/jorcass/storybook-addon-interaction"
+    "type": "git",
+    "url": "https://github.com/jorcass/storybook-addon-interaction"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
