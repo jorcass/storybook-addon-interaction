@@ -1,6 +1,10 @@
 {
   "name": "storybook-addon-interaction",
+<<<<<<< HEAD
   "version": "0.1.1",
+=======
+  "version": "0.0.2",
+>>>>>>> d72f71752ded82f95fe8c638b4b8889dd54df7df
   "description": "",
   "main": "dist/index.js",
   "scripts": {
