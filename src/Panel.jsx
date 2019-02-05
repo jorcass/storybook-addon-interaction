@@ -114,11 +114,12 @@ export default class Panel extends React.PureComponent {
   inspectorExpander = () => {
     const expandedLogsArr = this.state.logs.slice(this.state.depth * -1);
     return expandedLogsArr.reverse().map((log, index) => {
+      let uuidIndex = this.uuid();
       if (index === 0){
         return (
-          <TransitionGroup className="state">
+          <TransitionGroup className="state" key={uuidIndex}>
             <CSSTransition
-              key={this.uuid()}
+              key={uuidIndex}
               timeout={500}
               classNames="state"
             >
@@ -127,7 +128,11 @@ export default class Panel extends React.PureComponent {
           </TransitionGroup>
         )
       }
-      else return (<div className="sublog" ><Inspector data={log} expandLevel={this.state.expandLevel} /></div>)
+      else return (
+        <div className="sublog" key={uuidIndex}>
+          <Inspector data={log} expandLevel={this.state.expandLevel} />
+        </div>
+      );
     }
     );
   }
@@ -188,7 +193,7 @@ export default class Panel extends React.PureComponent {
       <Section className="item">
         <H3>Actions</H3>
         <ul>
-          {this.state.actions.map(action => (<li>{action}</li>))}
+          {this.state.actions.map((action, index) => (<li  key={index}>{action}</li>))}
         </ul>
       </Section>
     </div>
