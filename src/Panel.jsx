@@ -27,7 +27,19 @@ const style = <style>
   .sublog {
     padding-left: 15px;
   }
-  .state {
+  .sublog-enter {
+  }
+  /* ending ENTER animation */
+  .sublog-enter-active {
+  }
+  /* starting EXIT animation */
+  .sublog-exit {
+    display: none;
+  }
+  /* ending EXIT animation */
+  .sublog-exit-active {
+  }
+  .log > li:first-child{
     border: solid lightgray 1px;
     -webkit-box-shadow: -3px 6px 15px -1px rgba(0,0,0,0.3); 
     box-shadow: -3px 6px 15px -1px rgba(0,0,0,0.3);
@@ -113,28 +125,27 @@ export default class Panel extends React.PureComponent {
 
   inspectorExpander = () => {
     const expandedLogsArr = this.state.logs.slice(this.state.depth * -1);
-    return expandedLogsArr.reverse().map((log, index) => {
-      let uuidIndex = this.uuid();
-      if (index === 0){
-        return (
-          <TransitionGroup className="state" key={uuidIndex}>
-            <CSSTransition
-              key={uuidIndex}
-              timeout={500}
-              classNames="state"
-            >
-              <Inspector data={log} expandLevel={this.state.expandLevel} />
-            </CSSTransition>
-          </TransitionGroup>
+    return (<TransitionGroup className="log">{
+          expandedLogsArr.reverse().map((log, index) => {
+          if (index === 0){
+            return (
+                <CSSTransition
+                  key={this.uuid()}
+                  timeout={500}
+                  classNames="state"
+                >
+                  <Inspector data={log} expandLevel={this.state.expandLevel} />
+                </CSSTransition>
+                )
+              }
+              else return (
+              <CSSTransition classNames="sublog" timeout={0} key={this.uuid()}>
+                <Inspector data={log} expandLevel={this.state.expandLevel} />
+              </CSSTransition>)
+        }
         )
       }
-      else return (
-        <div className="sublog" key={uuidIndex}>
-          <Inspector data={log} expandLevel={this.state.expandLevel} />
-        </div>
-      );
-    }
-    );
+    </TransitionGroup>);
   }
 
   uuid = () => {
