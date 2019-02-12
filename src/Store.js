@@ -49,10 +49,12 @@ class Store {
   }
 
   updateComponent = debounce(() => {
+    if (!this.channel) { return; }
     this.channel.emit(Events.FORCE_RE_RENDER);
   }, 50);
 
   updatePanel = debounce(() => {
+    if (!this.channel) { return; }
     this.channel.emit('addon:interaction:update', {
       data: this.data,
       actions: Object.keys(this.actions),
