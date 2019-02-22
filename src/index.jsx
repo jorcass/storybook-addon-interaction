@@ -9,22 +9,30 @@ const fillGenericActions = (actions = {}) => {
   return newActions;
 };
 
+let lastFileName = null;
+
 export default makeDecorator({
   name: 'withInteraction',
   parameterName: 'interaction',
   allowDeprecatedUsage: false,
   skipIfNoParametersOrOptions: true,
   wrapper: (getStory, context, { options = {}, parameters = {} }) => {
+    const { fileName } = context.parameters;
     Store.setChannel(addons.getChannel());
     Store.updateData({
       ...(options.state || {}),
       ...(parameters.state || {}),
-      ...(Store.data || {}),
+      ...(lastFileName === fileName && Store.data || {}),
     });
     Store.setActions({
       ...fillGenericActions(options.actions),
       ...fillGenericActions(parameters.actions),
     });
+
+    // This is used to ensure we reset data when switching stories.
+    // The API for .onStory isn't accessible here, and storyshots sometimes
+    // acts up.
+    lastFileName = fileName;
 
     return getStory(context);
   },
