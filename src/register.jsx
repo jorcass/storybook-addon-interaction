@@ -7,6 +7,6 @@ addons.register('storybook-addon-interaction', (api) => {
   addons.addPanel('storybook-addon-interaction/panel', {
     title: 'Interactions',
     // eslint-disable-next-line react/prop-types
-    render: ({ active }) => <Panel channel={channel} api={api} active={active} />,
+    render: ({ active, key }) => <Panel channel={channel} api={api} active={active} key={key} />,
   });
 });
