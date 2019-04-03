@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Inspector } from 'react-inspector';
-import { css } from '@emotion/core'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { STORY_CHANGED } from '@storybook/core-events';
 import styled from '@emotion/styled'
 
 const H3 = styled.h3`
@@ -107,21 +107,21 @@ export default class Panel extends React.PureComponent {
     };
   }
 
+  emitReset = () => this.props.channel.emit('addon:interaction:reset');
+
+  update = data => this.setState(data);
+
   componentDidMount() {
     const { channel, api } = this.props;
     channel.on('addon:interaction:update', this.update);
-    this.stopListeningOnStory = api.onStory(() => {
-      channel.emit('addon:interaction:reset');
-    });
+    api.on(STORY_CHANGED, this.emitReset);
   }
 
   componentWillUnmount() {
-    const { channel } = this.props;
+    const { channel, api } = this.props;
     channel.removeListener('addon:interaction:update', this.update);
-    this.stopListeningOnStory();
+    api.off(STORY_CHANGED, this.emitReset);
   }
-
-  update = data => this.setState(data);
 
   inspectorExpander = () => {
     const expandedLogsArr = this.state.logs.slice(this.state.depth * -1);
